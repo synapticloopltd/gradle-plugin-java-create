@@ -1,0 +1,20 @@
+package {plugin.package};{\n}
+{\n}
+import java.util.ArrayList;{\n}
+import java.util.List;{\n}
+{\n}
+{\n}
+public class {plugin.nameUpper}PluginExtension {{{\n}
+
+{if fn:notNull[plugin.extensions]}
+	{loop plugin.extensions as extension}
+		{\t}private {extension.type} {extension.name};{\n}
+	{endloop}
+
+	{loop plugin.extensions as extension}
+		{\t}public {extension.type} get{extension.nameUpper}() {{ return(this.{extension.name};) };{\n}{\n}
+		{\t}public void set{extension.nameUpper}({extension.type} {extension.name}) {{ this.{extension.name} = {extension.name}; };{\n}{\n}
+	{endloop}
+
+{endif}
+}{\n}

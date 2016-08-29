@@ -1,0 +1,19 @@
+package {plugin.package};{\n}
+{\n}
+import org.gradle.api.Plugin;{\n}
+import org.gradle.api.Project;{\n}
+{\n}
+public class {plugin.nameUpper}Plugin implements Plugin<Project> {{{\n}
+{\n}
+{\t}@Override{\n}
+{\t}public void apply(Project project) {{{\n}
+{\t}{\t}project.getExtensions().create("{plugin.name}", {plugin.nameUpper}PluginExtension.class);{\n}
+{\n}
+{if fn:notNull[plugin.tasks]}
+	{loop plugin.tasks as task}
+		{\t}{\t}project.getTasks().create("{task}", {taskUpper}.class);{\n}
+	{endloop}
+{endif}
+{\n}
+{\t}}{\n}
+}{\n}

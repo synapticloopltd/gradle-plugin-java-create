@@ -1,0 +1,26 @@
+{
+	"output": "generate",
+
+	"name": "sample",
+	"package": "synapticloop.sample.plugin",
+	"group": "Sample",
+	"description": "This is a sample plugin generated in java",
+	"tasks": [
+		"SayHello",
+		"SayGoodbye"
+	],
+	"extensions": [
+		{ "name": "booleanValue", "type": "Boolean", "comment": "this is a boolean value that will be set" },
+		{ "name": "stringValue", "type": "String", "comment": "this is a string value that will be set" },
+		{ "name": "integerValue", "type": "Integer", "comment": "this is a integer value that will be set" },
+		{ "name": "arrayValue", "type": "Array", "comment": "this is a array of string values that will be set" }
+	],
+
+	"publishing": {
+		"group": "synapticloop",
+		"tags": [
+			"sample",
+			"java"
+		]
+	}
+}
