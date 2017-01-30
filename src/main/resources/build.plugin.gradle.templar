@@ -13,7 +13,7 @@ buildscript {{{\n}
 {\t}}{\n}
 {\n}
 {\t}dependencies {{{\n}
-{\t}{\t}classpath '{artefact}:{lowerName}:0.0.1'{\n}
+{\t}{\t}classpath '{artefact}:{name}:0.0.1'{\n}
 {\t}}{\n}
 }{\n}
 {\n}
