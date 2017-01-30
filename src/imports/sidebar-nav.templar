@@ -1,3 +1,7 @@
 <ul>
 	<li><a href="index.html">Home</a></li>
+	<li><a href="properties.html">.properties file</a></li>
+	<li><a href="plugin.html">Plugin.java file</a></li>
+	<li><a href="plugin-extension.html">PluginExtension.java file</a></li>
+	<li><a href="task.html">Task.java file</a></li>
 </ul>

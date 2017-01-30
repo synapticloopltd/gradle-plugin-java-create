@@ -1,0 +1,48 @@
+<h3>.properties</h3>
+
+<p>
+	The properties file <code>synapticloop.plugin.sample.TestSample.properties</code> 
+	file is output to the <code>./src/main/resources/META-INF/gradle-plugins/</code> 
+	directory.  This indicates to gradle that it is a plugin, and the points to 
+	the implementation class.  
+</p>
+
+<p>Looking at the file, you will see the contents:</p>
+
+<pre><code>
+{pre
+implementation-class=synapticloop.plugin.sample.TestSamplePlugin
+pre}</code></pre>
+
+<h3>Variables used in the generation</h3>
+
+<p><code>synapticloop.plugin.sample.TestSamplePlugin</code> is generated from the following:</p>
+
+<ul>
+	<li><code>{{package}</code> - the command line argument <code>-p</code> or <code>--package</code></li>
+	<li><code>.</code> - plain text</li>
+	<li><code>{{name}</code> - the command line argument <code>-n</code> or <code>--name</code></li>
+	<li><code>Plugin</code> - plain text</li>
+</ul>
+
+<h3>Things of note</h3>
+
+<p>You probably won't need to change anything in this file, however, a few things to note:</p>
+
+<ol>
+	<li>
+		The location of the file is important - it must reside in the <code>/META-INF/gradle-plugins/</code> 
+		of the produced artefact (i.e. <code>.jar</code> file)
+	</li>
+	<li>
+		The name of the file is important - it must be the same as the name of the 
+		plugin appended with '.properties' (in this case 
+		<code>synapticloop.plugin.sample.TestSample.properties</code>)
+	</li>
+	<li>
+		The properties file must contain a key of <code>implementation-class</code> with 
+		the value being the <code>Plugin</code> class.
+	</li>
+</ol>
+
+{import src/imports/footer.templar}

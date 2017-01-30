@@ -1,11 +1,19 @@
 <h3>gradle-plugin-java-create</h3>
 
 <p>
-	We love plugins, but we wanted to be able to write them in java in a much quicker way.
+	We love gradle, we love plugins - but we wanted to be able to write them in java in a much quicker way.
 </p>
 
 <p>
 	So, we created this scaffolding generator for gradle plugins in java!
+</p>
+
+<p>
+	This project also provides the documentation, so that you understand what is 
+	going on and are able to extend the plugin to do whatever you want it to.  
+	Rather than building yet another plugin (which we wanted to), we decided to 
+	build this plugin builder - as a way of sharing the knowledge of how to build 
+	plugins, and as a final test - use it as a way to build the next plugin!
 </p>
 
 <h3>Quick Start</h3>
@@ -29,16 +37,16 @@
 <pre><code>
 {pre
 usage: gradle-plugin-java-create
- -a,--artefact <arg>   The artefact that this will be published under
+ -a,--artefact &lt;arg&gt;   The artefact that this will be published under
                        (e.g. the github user/org name or the gradle
                        plugins username)
- -d,--desc <arg>       The description for the gradle plugin (free text
+ -d,--desc &lt;arg&gt;       The description for the gradle plugin (free text
                        description)
- -g,--group <arg>      The group for the gradle plugin (the group that the
+ -g,--group &lt;arg&gt;      The group for the gradle plugin (the group that the
                        plugin will be listed under for 'gradle tasks')
- -n,--name <arg>       The name of the gradle plugin (java class name
+ -n,--name &lt;arg&gt;       The name of the gradle plugin (java class name
                        CamelCase - __MUST__ not end in the word 'Plugin')
- -p,--package <arg>    The java package for the plugin (java dot '.'
+ -p,--package &lt;arg&gt;    The java package for the plugin (java dot '.'
                        delimited package name)
 
 pre}
@@ -54,7 +62,7 @@ java -jar gradle-plugin-java-create-&lt;version&gt;-all.jar \
     -n TestSample \
     -g Sample \
     -a synapticloop \
-    -p synapticloop.package.sample \
+    -p synapticloop.plugin.sample \
     -d "a simple test plugin"
 pre}</code></pre>
 
@@ -63,16 +71,16 @@ pre}</code></pre>
 </p>
 
 <dl>
-	<dt><code>./src/main/resources/META-INF/gradle-plugins/synapticloop.package.sample.TestSample.properties</code></dt>
+	<dt><code>./src/main/resources/META-INF/gradle-plugins/synapticloop.plugin.sample.TestSample.properties</code></dt>
 	<dd>this file is used by the gradle system to identify that it is actually a gradle plugin and designates the plugin's implementation class.</dd>
 
-	<dt><code>./src/main/java/synapticloop/package/sample/TestSamplePlugin.java</code></dt>
+	<dt><code>./src/main/java/synapticloop/plugin/sample/TestSamplePlugin.java</code></dt>
 	<dd></dd>
 
-	<dt><code>./src/main/java/synapticloop/package/sample/TestSamplePluginExtension.java</code></dt>
+	<dt><code>./src/main/java/synapticloop/plugin/sample/TestSamplePluginExtension.java</code></dt>
 	<dd></dd>
 
-	<dt><code>./src/main/java/synapticloop/package/sample/TestSampleTask.java</code></dt>
+	<dt><code>./src/main/java/synapticloop/plugin/sample/TestSampleTask.java</code></dt>
 	<dd></dd>
 
 	<dt><code>./build.plugin.gradle</code></dt>
