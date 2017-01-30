@@ -19,16 +19,16 @@ buildscript {{{\n}
 // list all of the plugins for this project{\n}
 plugins {{{\n}
 {\t}id 'java'{\n}
-{\t}id 'eclipse'{\n}
-{\t}id 'intellij'{\n}
+{\t}id 'maven'{\n}
+{\t}id 'maven-publish'{\n}
 }{\n}
 {\n}
 // textual information for this project{\n}
-group = '{plugin.publishing.group}'{\n}
-archivesBaseName = '{plugin.name}'{\n}
-description = """{plugin.version}"""{\n}
+group = '{artefact}'{\n}
+archivesBaseName = '{name}'{\n}
+description = """0.0.1"""{\n}
 {\n}
-version = '1.0.0'{\n}
+version = '0.0.1'{\n}
 {\n}
 sourceCompatibility = 1.7{\n}
 targetCompatibility = 1.7{\n}
@@ -66,6 +66,7 @@ task fatJar(type: Jar) {{{\n}
 {\n}
 build.finalizedBy(project.tasks.fatJar){\n}
 {\n}
+
 def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'{\n}
 def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'{\n}
 {\n}
@@ -86,7 +87,7 @@ task sourcesJar(type: Jar) {{{\n}
 // this publishes the built jar to the local repository{\n}
 publishing {{{\n}
 {\t}publications {{{\n}
-{\t}{\t}{plugin.publishing.group}(MavenPublication) {{{\n}
+{\t}{\t}{artefact}(MavenPublication) {{{\n}
 {\t}{\t}{\t}from components.java{\n}
 {\t}{\t}{\t}artifact sourcesJar{\n}
 {\t}{\t}{\t}artifact javadocJar{\n}

@@ -10,5 +10,31 @@ import java.util.List;{\n}
 {\n}
 {\n}
 public class {name}PluginExtension {{{\n}
-
+{\t}private boolean booleanValue = false;{\n}
+{\t}private List<String> stringList = new ArrayList<String>();{\n}
+{\t}private String stringValue = "someString";{\n}
+{\n}
+{\t}public boolean getBooleanValue() {{{\n}
+{\t}{\t}return(this.booleanValue);{\n}
+{\t}}{\n}
+{\n}
+{\t}public void setBooleanValue(boolean booleanValue) {{{\n}
+{\t}{\t}this.booleanValue = booleanValue;{\n}
+{\t}}{\n}
+{\n}
+{\t}public List<String> getStringList() {{{\n}
+{\t}{\t}return this.stringList;{\n}
+{\t}}{\n}
+{\n}
+{\t}public void setStringList(List<String> stringList) {{{\n}
+{\t}{\t}this.stringList = stringList;{\n}
+{\t}}{\n}
+{\n}
+{\t}public String getStringValue() {{{\n}
+{\t}{\t}return this.stringValue;{\n}
+{\t}}{\n}
+{\n}
+{\t}public void setStringValue(String stringValue) {{{\n}
+{\t}{\t}this.stringValue = stringValue;{\n}
+{\t}}{\n}
 }{\n}

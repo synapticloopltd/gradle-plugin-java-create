@@ -33,6 +33,12 @@ public class {name}Task extends DefaultTask {{{\n}
 {\t}{\t}logger.debug("This will only be logged when the task is invoked with the --debug command line argument.");{\n}
 {\t}{\t}logger.lifecycle("This will be logged as output on standard out.");{\n}
 {\n}
+{\t}{\t}logger.lifecycle("Logging out the boolean value of 'booleanValue' as '{{}'", extension.getBooleanValue());{\n}
+{\t}{\t}logger.lifecycle("Logging out the string value of 'stringValue' as '{{}'", extension.getStringValue());{\n}
+{\n}
+{\t}{\t}for (String stringListValue : extension.getStringList()) {{{\n}
+{\t}{\t}{\t}logger.lifecycle("Logging out the string value from the list 'stringList' as '{{}'", stringListValue);{\n}
+{\t}{\t}}{\n}
 {\t}}{\n}
 }{\n}
 {\n}

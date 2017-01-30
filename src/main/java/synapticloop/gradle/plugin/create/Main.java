@@ -96,10 +96,12 @@ public class Main {
 		templarContext.add("package", packageName);
 		templarContext.add("group", group);
 		templarContext.add("artefact", artefact);
+		String lowerName = name.substring(0,1).toLowerCase() + name.substring(1);
+		templarContext.add("lowerName", lowerName);
 
 		// now create the properties file
 		render(Main.class.getResourceAsStream("/META-INF/gradle-plugins/plugin.properties.templar"), 
-				new File(propertiesDirectory.getAbsolutePath() + "/" + packageName + "." + name + ".properties"), 
+				new File(propertiesDirectory.getAbsolutePath() + "/" + artefact + "." + lowerName + ".properties"), 
 				templarContext);
 
 		// now for the Plugin
@@ -120,6 +122,11 @@ public class Main {
 		// now for the Plugin task
 		render(Main.class.getResourceAsStream("/build.plugin.gradle.templar"), 
 				new File("./build.plugin.gradle"), 
+				templarContext);
+
+		// now for the Plugin task
+		render(Main.class.getResourceAsStream("/build.plugin.initial.gradle.templar"), 
+				new File("./build.plugin.initial.gradle"), 
 				templarContext);
 	}
 
