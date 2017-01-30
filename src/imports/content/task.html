@@ -57,7 +57,7 @@ pre}</code></pre>
 
 <h3>Variables used in the generation</h3>
 
-<p><code>TestSamplePlugin.java</code> uses the following variables:</p>
+<p><code>TestSampleTask.java</code> uses the following variables:</p>
 
 <ul>
 	<li>
@@ -70,25 +70,51 @@ pre}</code></pre>
 	<li>
 		<code>{{name}</code> - the command line argument <code>-n</code> or <code>--name</code>
 		<ul>
-			<li>This becomes the file name <code>{{name}Plugin.java</code></li>
-			<li>This becomes the class declaration <code>public class {{name}Plugin implements Plugin {{</code></li>
+			<li>This becomes the file name <code>{{name}Task.java</code></li>
+			<li>This becomes the class declaration <code>public class {{name}Task implements DefaultTask {{</code></li>
+		</ul>
+	</li>
+</ul>
+
+<p>
+	For the following code:
+</p>
+
+<pre><code>
+{pre
+	public TestSampleTask() {
+		setGroup("Sample");
+		setDescription("a simple test plugin");
+
+		this.logger = getProject().getLogger();
+	}
+
+pre}
+</code></pre>
+
+<ul>
+	<li>
+		<code>{{group}</code> - this is generated from the <code>-g</code> or 
+		<code>--group</code> command line argument.
+		<ul>
+			<li>this is used to set the grouping for the task <code>setGroup("Sample");</code></li>
 		</ul>
 	</li>
 	<li>
-		<code>{{lowerName}</code> - this is generated from the <code>-n</code> or 
-		<code>--name</code> command line argument.  <strong>NOTE:</strong> this is
-		generated from the <code>{{name}</code> variable with its first letter lowercased. (e.g. <code>TestSample</code> -&gt; <code>testSample</code>)
+		<code>{{desc}</code> - this is generated from the <code>-d</code> or 
+		<code>--desc</code> command line argument.
 		<ul>
-			<li>This is used to create the plugin extensions for the <code>build.gradle</code> file: 
-			<code>public static final String PLUGIN_NAME = "{{lowerName}";</code>
-			</li>
+			<li>this is used to set the description for the task <code>setDescription("a simple test plugin");</code></li>
 		</ul>
 	</li>
 </ul>
 
 <h3>Things of note</h3>
 
-<p>You probably won't need to change anything in this file, however, a few things to note:</p>
+<p>
+	This is the class that you will need to change the most - it does all of the 
+	work associated with the plugin.
+</p>
 
 <ol>
 	<li>

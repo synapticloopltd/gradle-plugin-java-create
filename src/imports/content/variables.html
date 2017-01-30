@@ -1,8 +1,37 @@
-<h3>gradle-plugin-java-create</h3>
+<h3>variables (and where they are used)</h3>
 
 <p>
-	We love gradle, we love plugins - but we wanted to be able to write them in java in a much quicker way.
+	Writing a gradle plugin that works and that can be tested easily requires a 
+	few bits of knowledge to make the process seamless.  
 </p>
+<p>
+	For your reference, the variables that are required on the command line are the 
+	smallest subset of variables that you will need to generate the file.  
+	<strong>You will most likely be required to update some of the files to ensure 
+	that you create and publish your plugin correctly.</strong>
+</p>
+
+<h4><code>{{name}</code> and <code>{{lowerName}</code></h4>
+
+<p>
+	The <code>name</code> variable is used throughout most of the files - this is also 
+	translated to <code>lowerName</code> by lowercasing the first letter of the <code>{{name}</code> 
+	variable.  (i.e. <code>String lowerName = name.substring(0,1).toLowerCase() + name.substring(1);</code>)
+</p>
+
+<p>
+	These variables are used in the following files, and for the following reasons:
+</p>
+
+<ul>
+	<li>
+		<code>{{artefact}.{{lowerName}.properties</code> file
+		<ul>
+			<li>The <code>{{lowername}</code> variable used to generate the file name</li>
+			<li>The <code>{{name}</code> variable is used as a value for the <code>implementation-class</code> key in the properties file</li> 
+		</ul>
+	</li>
+</ul>
 
 <p>
 	So, we created this scaffolding generator for gradle plugins in java!

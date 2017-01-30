@@ -1,7 +1,7 @@
 <h3>.properties</h3>
 
 <p>
-	The properties file <code>synapticloop.plugin.sample.TestSample.properties</code> 
+	The properties file <code>synapticloop.testSample.properties</code> 
 	file is output to the <code>./src/main/resources/META-INF/gradle-plugins/</code> 
 	directory.  This indicates to gradle that it is a plugin, and the points to 
 	the implementation class.  
@@ -23,6 +23,14 @@ pre}</code></pre>
 	<li><code>.</code> - plain text</li>
 	<li><code>{{name}</code> - the command line argument <code>-n</code> or <code>--name</code></li>
 	<li><code>Plugin</code> - plain text</li>
+	<li>
+		<code>{{lowerName}</code> - this is generated from the <code>-n</code> or 
+		<code>--name</code> command line argument.  <strong>NOTE:</strong> this is 
+		generated from the <code>{{name}</code> variable with its first letter lowercased. (e.g. <code>TestSample</code> -&gt; <code>testSample</code>)
+		<ul>
+			<li>This is used to create the name of the <code>.properties</code> file</li>
+		</ul>
+	</li>
 </ul>
 
 <h3>Things of note</h3>

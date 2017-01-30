@@ -13,24 +13,24 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'synapticloop:TestSample:0.0.1'
+		classpath 'synapticloop:testSample:0.0.1'
 	}
 }
 
 // list all of the plugins for this project
 plugins {
 	id 'java'
-	id 'eclipse'
-	id 'intellij'
+	id 'maven'
+	id 'maven-publish'
 
 	id 'com.gradle.plugin-publish' version '0.9.7'
 }
 
-apply plugin: 'synapticloop.TestSample'
+apply plugin: 'synapticloop.testSample'
 
 // textual information for this project
 group = 'synapticloop'
-archivesBaseName = 'TestSample'
+archivesBaseName = 'testSample'
 description = """a simple test plugin"""
 
 version = '0.0.1'
@@ -63,7 +63,24 @@ configurations.all {
  * Here are the configuration elements for the javaSample task
  */
 
-TestSample {
+testSample {
+}
+
+def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'
+def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'
+
+tasks.withType(Javadoc) {
+	options.links(javaApiUrl, groovyApiUrl)
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
 }
 
 // Now it is time to publish the plugin
@@ -75,7 +92,7 @@ pluginBundle {
 
 	plugins {
 		TestSample {
-			id = 'synapticloop.TestSample'
+			id = 'synapticloop.testSample'
 			displayName = 'a simple test plugin'
 		}
 	}
