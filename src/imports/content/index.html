@@ -8,4 +8,79 @@
 	So, we created this scaffolding generator for gradle plugins in java!
 </p>
 
+<h3>Quick Start</h3>
+
+<p>
+	To get started quickly you will need to download the jar from the 
+	<a href="https://github.com/synapticloopltd/gradle-plugin-java-create/releases/">GitHub releases page</a>.  We 
+	recommend that you get the latest release.
+</p>
+
+<p>
+	Once you have downloaded the jar, try:
+</p>
+
+<pre><code>java -jar gradle-plugin-java-create-&lt;version&gt;-all.jar </code></pre>
+
+<p>
+	You will be presented with a <em>(hopefully)</em> helpful usage message:
+</p>
+
+<pre><code>
+{pre
+usage: gradle-plugin-java-create
+ -a,--artefact <arg>   The artefact that this will be published under
+                       (e.g. the github user/org name or the gradle
+                       plugins username)
+ -d,--desc <arg>       The description for the gradle plugin (free text
+                       description)
+ -g,--group <arg>      The group for the gradle plugin (the group that the
+                       plugin will be listed under for 'gradle tasks')
+ -n,--name <arg>       The name of the gradle plugin (java class name
+                       CamelCase - __MUST__ not end in the word 'Plugin')
+ -p,--package <arg>    The java package for the plugin (java dot '.'
+                       delimited package name)
+
+pre}
+</code></pre>
+
+<p><strong>ALL</strong> options are required</p>
+
+<h3>Example</h3>
+
+<pre><code>
+{pre
+java -jar gradle-plugin-java-create-&lt;version&gt;-all.jar \
+    -n TestSample \
+    -g Sample \
+    -a synapticloop \
+    -p synapticloop.package.sample \
+    -d "a simple test plugin"
+pre}</code></pre>
+
+<p>
+	This will then generate the following files:
+</p>
+
+<dl>
+	<dt><code>./src/main/resources/META-INF/gradle-plugins/synapticloop.package.sample.TestSample.properties</code></dt>
+	<dd>this file is used by the gradle system to identify that it is actually a gradle plugin and designates the plugin's implementation class.</dd>
+
+	<dt><code>./src/main/java/synapticloop/package/sample/TestSamplePlugin.java</code></dt>
+	<dd></dd>
+
+	<dt><code>./src/main/java/synapticloop/package/sample/TestSamplePluginExtension.java</code></dt>
+	<dd></dd>
+
+	<dt><code>./src/main/java/synapticloop/package/sample/TestSampleTask.java</code></dt>
+	<dd></dd>
+
+	<dt><code>./build.plugin.gradle</code></dt>
+	<dd></dd>
+
+	<dt><code>./build.plugin.initial.gradle</code></dt>
+	<dd></dd>
+
+</dl>
+
 {import src/imports/footer.templar}

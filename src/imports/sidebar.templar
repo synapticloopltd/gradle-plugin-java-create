@@ -1,7 +1,7 @@
 <section id="sidebar">
 	<section>
-		<h3>templar-gen</h3>
-		<p>generate static pages usingn the templar templating language.</p>
+		<h3>gradle-plugin-java-create</h3>
+		<p>Create the scaffolding for a gradle plugin in java</p>
 		<hr />
 		{import src/imports/sidebar-nav.templar}
 	</section>
@@ -10,7 +10,7 @@
 		<h3>View this project on github</h3>
 		<footer>
 			<ul class="actions">
-				<li><a href="https://github.com/synapticloop/templar-gen" class="button small alt">GitHub Project</a></li>
+				<li><a href="https://github.com/synapticloop/gradle-plugin-java-create" class="button small alt">GitHub Project</a></li>
 			</ul>
 		</footer>
 	</section>
