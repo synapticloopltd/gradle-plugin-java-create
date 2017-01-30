@@ -4,22 +4,18 @@ plugins {
 	id "maven"
 	id "maven-publish"
 
-	id 'net.saliman.cobertura' version '2.3.0'
-
 	id "com.jfrog.bintray" version "1.6"
 	id 'co.riiid.gradle' version '0.4.2'
 
 	id 'synapticloop.documentr' version '2.6.1'
 	id 'synapticloop.copyrightr' version '1.1.2'
-
-	id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 group = 'synapticloop'
 archivesBaseName = 'gradle-plugin-java-create'
 description = """Easy generation of a gradle plugin in java"""
 
-version = '1.0.0'
+version = '0.0.1'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -34,8 +30,14 @@ repositories {
 
 dependencies {
 	runtime 'synapticloop:templar:1.3.0'
+	runtime 'commons-cli:commons-cli:1.3.1'
+	runtime 'synapticloop:simplelogger:1.1.1'
 
 	compile 'synapticloop:templar:1.3.0'
+	compile 'commons-cli:commons-cli:1.3.1'
+	compile 'synapticloop:simplelogger:1.1.1'
+
+	compile gradleApi()
 }
 
 configurations.all {
@@ -60,29 +62,25 @@ copyrightr {
 	failOnMissing = false
 }
 
-/*
- * COBERTURA
- */
-
-cobertura {
-	coverageFormats = [ 'html', 'xml']
+def locateJar(lib) {
+	configurations.runtime.findAll {it.getName().contains(lib)}.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
-test {
-	include '**/*Test.class' 
-	maxParallelForks = 1
-	forkEvery = 50 
-}
+task fatJar(type: Jar) {
+	classifier = 'all'
 
-shadowJar {
-	dependencies {
-		include(dependency('synapticloop:templar:.*'))
-		include(dependency('org.json:json:.*'))
-		classifier = ""
+	manifest {
+		attributes("Main-Class": "synapticloop.gradle.plugin.create.Main")
 	}
+
+	from { locateJar('simplelogger') } { include "**" }
+	from { locateJar('templar') } { include "**" }
+	from { locateJar('commons-cli') } { include "**" }
+
+	from(sourceSets.main.output) { include "**" }
 }
 
-build.finalizedBy(project.tasks.shadowJar)
+build.finalizedBy(project.tasks.fatJar)
 
 
 /*
