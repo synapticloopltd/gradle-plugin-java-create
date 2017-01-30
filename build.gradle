@@ -3,10 +3,15 @@ plugins {
 	id 'eclipse'
 	id "maven"
 	id "maven-publish"
+
 	id 'net.saliman.cobertura' version '2.3.0'
+
 	id "com.jfrog.bintray" version "1.6"
 	id 'co.riiid.gradle' version '0.4.2'
+
 	id 'synapticloop.documentr' version '2.6.1'
+	id 'synapticloop.copyrightr' version '1.1.2'
+
 	id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
@@ -38,6 +43,21 @@ configurations.all {
 		failOnVersionConflict()
 		force 'junit:junit:4.11'
 	}
+}
+
+copyrightr {
+	dryRun = false
+	copyrightHolder = "Synapticloop"
+
+	includes = [ 
+		"**/*.java"
+	]
+
+	excludes = [ "**/*.class" ]
+
+	yearSeparator = " - "
+
+	failOnMissing = false
 }
 
 /*
