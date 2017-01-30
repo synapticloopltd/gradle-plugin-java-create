@@ -37,11 +37,13 @@ public class Main {
 	private static String desc = null;
 	private static String group = null;
 	private static String packageName = null;
+	private static String artefact = null;
 
 	private static final Options options = new Options();
 	static {
-		options.addOption(new Option("n", "name", true, "The name of the gradle plugin (java class name CamelCase)"));
+		options.addOption(new Option("n", "name", true, "The name of the gradle plugin (java class name CamelCase - __MUST__ not end in the word 'Plugin')"));
 		options.addOption(new Option("d", "desc", true, "The description for the gradle plugin (free text description)"));
+		options.addOption(new Option("a", "artefact", true, "The artefact that this will be published under (e.g. the github user/org name or the gradle plugins username)"));
 		options.addOption(new Option("g", "group", true, "The group for the gradle plugin (the group that the plugin will be listed under for 'gradle tasks')"));
 		options.addOption(new Option("p", "package", true, "The java package for the plugin (java dot '.' delimited package name)"));
 	}
@@ -54,8 +56,13 @@ public class Main {
 		desc = cmd.getOptionValue("d");
 		group = cmd.getOptionValue("g");
 		packageName = cmd.getOptionValue("p");
+		artefact = cmd.getOptionValue("a");
 
-		if(null == name || null == desc || null == group || null == packageName) {
+		if(null == name || 
+				null == desc || 
+				null == group || 
+				null == packageName ||
+				null == artefact) {
 			throw new ParseException("All options are required");
 		}
 
@@ -88,6 +95,7 @@ public class Main {
 		templarContext.add("description", desc);
 		templarContext.add("package", packageName);
 		templarContext.add("group", group);
+		templarContext.add("artefact", artefact);
 
 		// now create the properties file
 		render(Main.class.getResourceAsStream("/META-INF/gradle-plugins/plugin.properties.templar"), 
@@ -107,6 +115,11 @@ public class Main {
 		// now for the Plugin task
 		render(Main.class.getResourceAsStream("/task.java.templar"), 
 				new File(javaSourceDirectory.getAbsolutePath() + "/" + name + "Task.java"), 
+				templarContext);
+
+		// now for the Plugin task
+		render(Main.class.getResourceAsStream("/build.plugin.gradle.templar"), 
+				new File("./build.plugin.gradle"), 
 				templarContext);
 	}
 

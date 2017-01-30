@@ -76,6 +76,7 @@ task fatJar(type: Jar) {
 	from { locateJar('simplelogger') } { include "**" }
 	from { locateJar('templar') } { include "**" }
 	from { locateJar('commons-cli') } { include "**" }
+	from { locateJar('json') } { include "**" }
 
 	from(sourceSets.main.output) { include "**" }
 }
