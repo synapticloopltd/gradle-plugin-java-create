@@ -15,7 +15,7 @@ group = 'synapticloop'
 archivesBaseName = 'gradle-plugin-java-create'
 description = """Easy generation of a gradle plugin in java"""
 
-version = '0.0.1'
+version = '1.0.0'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
