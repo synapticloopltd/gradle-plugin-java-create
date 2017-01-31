@@ -2,6 +2,8 @@ package synapticloop.gradle.plugin.create;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -33,41 +35,72 @@ import synapticloop.templar.exception.RenderException;
 import synapticloop.templar.utils.TemplarContext;
 
 public class Main {
-	private static String name = null;
-	private static String desc = null;
-	private static String group = null;
-	private static String packageName = null;
+	private static final String OPTION_ARTEFACT = "a";
+	private static final String OPTION_DESC = "d";
+	private static final String OPTION_DISPLAY_GROUP = "dg";
+	private static final String OPTION_DISPLAY_NAME = "dn";
+	private static final String OPTION_JAVA_PACKAGE = "jp";
+	private static final String OPTION_NAME = "n";
+	private static final String OPTION_TAGS = "t";
+
 	private static String artefact = null;
+	private static String desc = null;
+	private static String displayGroup = null;
+	private static String displayName = null;
+	private static String javaPackage = null;
+	private static String name = null;
+	private static List<String> tags = new ArrayList<String>();
 
 	private static final Options options = new Options();
 	static {
-		options.addOption(new Option("n", "name", true, "The name of the gradle plugin (java class name CamelCase - __MUST__ not end in the word 'Plugin')"));
-		options.addOption(new Option("d", "desc", true, "The description for the gradle plugin (free text description)"));
-		options.addOption(new Option("a", "artefact", true, "The artefact that this will be published under (e.g. the github user/org name or the gradle plugins username)"));
-		options.addOption(new Option("g", "group", true, "The group for the gradle plugin (the group that the plugin will be listed under for 'gradle tasks')"));
-		options.addOption(new Option("p", "package", true, "The java package for the plugin (java dot '.' delimited package name)"));
+		Option artefactOpt = new Option(OPTION_ARTEFACT, "artefact", true, "The artefact that this will be published under (e.g. the github user/org name or the gradle plugins username)");
+		artefactOpt.setRequired(true);
+		options.addOption(artefactOpt);
+
+		Option descOption = new Option(OPTION_DESC, "desc", true, "The description for the gradle plugin (free text description)");
+		descOption.setRequired(true);
+		options.addOption(descOption);
+
+		Option displayGroupOption = new Option(OPTION_DISPLAY_GROUP, "display-group", true, "The display group for the gradle plugin (the group that the plugin will be listed under for 'gradle tasks')");
+		displayGroupOption.setRequired(true);
+		options.addOption(displayGroupOption);
+
+		Option displayNameOption = new Option(OPTION_DISPLAY_NAME, "display-name", true, "The name to display on the gradle plugins site");
+		displayNameOption.setRequired(true);
+		options.addOption(displayNameOption);
+
+		Option javaPackage = new Option(OPTION_JAVA_PACKAGE, "java-package", true, "The java package for the plugin (java dot '.' delimited package name)");
+		javaPackage.setRequired(true);
+		options.addOption(javaPackage);
+
+		Option nameOption = new Option(OPTION_NAME, "name", true, "The name of the gradle plugin (java class name CamelCase - __MUST__ not end in the word 'Plugin')");
+		nameOption.setRequired(true);
+		options.addOption(nameOption);
+
+		Option tagsOption = new Option(OPTION_TAGS, "tags", true, "A comma ',' separated list of tags for the plugin that is displayed on the gradle plugins site");
+		tagsOption.setRequired(true);
+		options.addOption(tagsOption);
+
 	}
 
 	private static void parseOptions(String[] args) throws ParseException {
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse(options, args);
 
-		name = cmd.getOptionValue("n");
-		desc = cmd.getOptionValue("d");
-		group = cmd.getOptionValue("g");
-		packageName = cmd.getOptionValue("p");
-		artefact = cmd.getOptionValue("a");
+		artefact = cmd.getOptionValue(OPTION_ARTEFACT);
+		desc = cmd.getOptionValue(OPTION_DESC);
+		displayGroup = cmd.getOptionValue(OPTION_DISPLAY_GROUP);
+		displayName = cmd.getOptionValue(OPTION_DISPLAY_NAME);
+		javaPackage = cmd.getOptionValue(OPTION_JAVA_PACKAGE);
+		name = cmd.getOptionValue(OPTION_NAME);
 
-		if(null == name || 
-				null == desc || 
-				null == group || 
-				null == packageName ||
-				null == artefact) {
-			throw new ParseException("All options are required");
+		String[] splits = cmd.getOptionValue(OPTION_TAGS).split(",");
+		for (String tag : splits) {
+			tags.add(tag.trim());
 		}
 
 		if(name.endsWith("Plugin")) {
-			throw new ParseException("The name of the Plugin __MUST__ not end with Plugin");
+			throw new ParseException("The 'name' argument __MUST__ not end with 'Plugin'");
 		}
 	}
 
@@ -77,6 +110,7 @@ public class Main {
 		} catch (ParseException ex) {
 			System.out.println("[FATAL] \n\t" + ex.getMessage() + "\n");
 			HelpFormatter formatter = new HelpFormatter();
+			formatter.setWidth(120);
 			formatter.printHelp("gradle-plugin-java-create", options);
 			return;
 		}
@@ -87,17 +121,21 @@ public class Main {
 		File propertiesDirectory = new File("./src/main/resources/META-INF/gradle-plugins/");
 		propertiesDirectory.mkdirs();
 
-		File javaSourceDirectory = new File("./src/main/java/" + packageName.replace(".", "/"));
+		File javaSourceDirectory = new File("./src/main/java/" + javaPackage.replace(".", "/"));
 		javaSourceDirectory.mkdirs();
 
 		TemplarContext templarContext = new TemplarContext();
-		templarContext.add("name", name);
-		templarContext.add("description", desc);
-		templarContext.add("package", packageName);
-		templarContext.add("group", group);
 		templarContext.add("artefact", artefact);
+		templarContext.add("description", desc);
+		templarContext.add("displayGroup", displayGroup);
+		templarContext.add("displayName", displayName);
+		templarContext.add("javaPackage", javaPackage);
+
+		templarContext.add("name", name);
 		String lowerName = name.substring(0,1).toLowerCase() + name.substring(1);
 		templarContext.add("lowerName", lowerName);
+
+		templarContext.add("tags", tags);
 
 		// now create the properties file
 		render(Main.class.getResourceAsStream("/META-INF/gradle-plugins/plugin.properties.templar"), 

@@ -26,10 +26,12 @@ plugins {{{\n}
 // textual information for this project{\n}
 group = '{artefact}'{\n}
 archivesBaseName = '{name}'{\n}
-description = """0.0.1"""{\n}
+description = """{description}"""{\n}
 {\n}
 version = '0.0.1'{\n}
 {\n}
+// __WARN__ if you want the source and target compatability to be another version {\n}
+// of java - you will also need to change the links to the javadoc locations{\n}
 sourceCompatibility = 1.7{\n}
 targetCompatibility = 1.7{\n}
 {\n}
@@ -59,15 +61,20 @@ def locateJar(lib) {{{\n}
 }{\n}
 {\n}
 task fatJar(type: Jar) {{{\n}
-{\t}classifier = 'all'{\n}
+{\t}classifier = ''{\n}
 {\n}
+{\t}// if you need to include other jars, then you will need to include a line{\n}
+{\t}// for each of the dependency jars:{\n}
+{\t}// from {{ locateJar('commons-cli') } {{ include "**" }{\n}
 {\t}from(sourceSets.main.output) {{ include "**" }{\n}
 }{\n}
 {\n}
 build.finalizedBy(project.tasks.fatJar){\n}
 {\n}
 
-def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'{\n}
+// __WARN__ if you have changed the source and target compatability to be another {\n}
+// version of java - you will also need to change the links below{\n}
+def javaApiUrl = 'http://docs.oracle.com/javase/7/docs/api/'{\n}
 def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'{\n}
 {\n}
 tasks.withType(Javadoc) {{{\n}
@@ -87,6 +94,7 @@ task sourcesJar(type: Jar) {{{\n}
 // this publishes the built jar to the local repository{\n}
 publishing {{{\n}
 {\t}publications {{{\n}
+{\t}{\t}// __WARN__: You will probably need to change this to be a single word{\n}
 {\t}{\t}{artefact}(MavenPublication) {{{\n}
 {\t}{\t}{\t}from components.java{\n}
 {\t}{\t}{\t}artifact sourcesJar{\n}

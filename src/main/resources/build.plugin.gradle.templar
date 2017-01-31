@@ -35,6 +35,8 @@ description = """{description}"""{\n}
 {\n}
 version = '0.0.1'{\n}
 {\n}
+// __WARN__ if you want the source and target compatability to be another version {\n}
+// of java - you will also need to change the links to the javadoc locations{\n}
 sourceCompatibility = 1.7{\n}
 targetCompatibility = 1.7{\n}
 {\n}
@@ -64,31 +66,17 @@ configurations.all {{{\n}
  */{\n}
 {\n}
 {lowerName} {{{\n}
-	{if fn:notNull[plugin.extension]}
-	{loop plugin.extension as extension}
-		{if fn:notNull[extension.comment]}
-			{\t}// {extension.comment}{\n}
-		{endif}
-		{\t}{entension.name} = 
-		{if fn:=[extension.type, 'String']}
-			"some string to be set"
-		{endif}
-		{if fn:=[extension.type, 'Integer']}
-			100
-		{endif}
-		{if fn:=[extension.type, 'Boolean']}
-			true
-		{endif}
-		{if fn:=[extension.type, 'Array']}
-			[ "one", "two"]
-		{endif}
-		{\n}{\n}
-	{endloop}
-	{endif}
+{\t}// At this point - this is how you set or over-ride variables for the plugin.{\n}
+{\t}// Note that these must have both a setter and getter in the PluginExtension.java 
+{\t}// class{\n}
+{\t}booleanValue = true{\n}
+{\t}stringValue = "this is a string value set from the build.plugin.gradle file"{\n}
+{\t}stringList = [ "one", "two", "three" ]{\n}
 }{\n}
 {\n}
-
-def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'{\n}
+// __WARN__ if you have changed the source and target compatability to be another {\n}
+// version of java - you will also need to change the links below{\n}
+def javaApiUrl = 'http://docs.oracle.com/javase/7/docs/api/'{\n}
 def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'{\n}
 {\n}
 tasks.withType(Javadoc) {{{\n}
@@ -108,16 +96,20 @@ task sourcesJar(type: Jar) {{{\n}
 
 // Now it is time to publish the plugin{\n}
 pluginBundle {{{\n}
+{\t}// __WARN__ ensure that the following links are actually set correctly {\n}
 {\t}website = 'https://github.com/{artefact}/{name}'{\n}
 {\t}vcsUrl = 'https://github.com/{artefact}/{name}'{\n}
 {\t}description = '{description}'{\n}
 {\t}tags = [ 
+	{loop tags as tag}
+		"{tag}"{if !tagStatus.last}, {endif}
+	{endloop}
  ]{\n}
 {\n}
 {\t}plugins {{{\n}
 {\t}{\t}{name} {{{\n}
 {\t}{\t}{\t}id = '{artefact}.{name}'{\n}
-{\t}{\t}{\t}displayName = '{description}'{\n}
+{\t}{\t}{\t}displayName = '{displayName}'{\n}
 {\t}{\t}}{\n}
 {\t}}{\n}
 }{\n}

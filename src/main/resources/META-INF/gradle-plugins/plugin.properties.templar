@@ -6,5 +6,5 @@
 # Implementation class for the plugin{\n}
 #{\n}
 {\n}
-implementation-class={package}.{name}Plugin{\n}
+implementation-class={javaPackage}.{name}Plugin{\n}
 
