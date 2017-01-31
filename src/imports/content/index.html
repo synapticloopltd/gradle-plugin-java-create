@@ -37,17 +37,17 @@
 <pre><code>
 {pre
 usage: gradle-plugin-java-create
- -a,--artefact &lt;arg&gt;   The artefact that this will be published under
-                       (e.g. the github user/org name or the gradle
-                       plugins username)
- -d,--desc &lt;arg&gt;       The description for the gradle plugin (free text
-                       description)
- -g,--group &lt;arg&gt;      The group for the gradle plugin (the group that the
-                       plugin will be listed under for 'gradle tasks')
- -n,--name &lt;arg&gt;       The name of the gradle plugin (java class name
-                       CamelCase - __MUST__ not end in the word 'Plugin')
- -p,--package &lt;arg&gt;    The java package for the plugin (java dot '.'
-                       delimited package name)
+ -a,--artefact &lt;arg&gt;         The artefact that this will be published under (e.g. the github user/org name or the gradle
+                             plugins username)
+ -d,--desc &lt;arg&gt;             The description for the gradle plugin (free text description)
+ -dg,--display-group &lt;arg&gt;   The display group for the gradle plugin (the group that the plugin will be listed under for
+                             'gradle tasks')
+ -dn,--display-name &lt;arg&gt;    The name to display on the gradle plugins site
+ -jp,--java-package &lt;arg&gt;    The java package for the plugin (java dot '.' delimited package name)
+ -n,--name &lt;arg&gt;             The name of the gradle plugin (java class name CamelCase - __MUST__ not end in the word
+                             'Plugin')
+ -t,--tags &lt;arg&gt;             A comma ',' separated list of tags for the plugin that is displayed on the gradle plugins
+                             site
 
 pre}
 </code></pre>
@@ -59,11 +59,13 @@ pre}
 <pre><code>
 {pre
 java -jar gradle-plugin-java-create-&lt;version&gt;-all.jar \
-    -n TestSample \
-    -g Sample \
     -a synapticloop \
-    -p synapticloop.plugin.sample \
-    -d "a simple test plugin"
+    -d "a simple test plugin" \
+    -dg "Sample" \
+    -dn "Synapticloop test sample plugin" \
+    -jp synapticloop.plugin.sample \
+    -n TestSample \
+    -t test,plugin
 pre}</code></pre>
 
 <p>

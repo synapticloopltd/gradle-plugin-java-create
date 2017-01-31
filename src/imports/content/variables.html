@@ -20,7 +20,7 @@
 </p>
 
 <p>
-	These variables are used in the following files, and for the following reasons:
+	These variables are used in the following files::
 </p>
 
 <ul>
@@ -28,6 +28,23 @@
 		<code>{{artefact}.{{lowerName}.properties</code> file
 		<ul>
 			<li>The <code>{{lowername}</code> variable used to generate the file name</li>
+			<li>The <code>{{name}</code> variable is used as a value for the <code>implementation-class</code> key in the properties file</li> 
+		</ul>
+	</li>
+</ul>
+
+
+<h4><code>{{desc}</code></h4>
+
+<p>
+	This variable is used in the following files:
+</p>
+
+<ul>
+	<li>
+		<code>build.plugin.initial.gradle</code> file
+		<ul>
+			<li>The <code>{{desc}</code> variable is used as the <code>description</code> property</li>
 			<li>The <code>{{name}</code> variable is used as a value for the <code>implementation-class</code> key in the properties file</li> 
 		</ul>
 	</li>

@@ -13,7 +13,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'synapticloop:testSample:0.0.1'
+		classpath 'synapticloop:TestSample:0.0.1'
 	}
 }
 
@@ -30,11 +30,13 @@ apply plugin: 'synapticloop.testSample'
 
 // textual information for this project
 group = 'synapticloop'
-archivesBaseName = 'testSample'
+archivesBaseName = 'TestSample'
 description = """a simple test plugin"""
 
 version = '0.0.1'
 
+// __WARN__ if you want the source and target compatability to be another version 
+// of java - you will also need to change the links to the javadoc locations
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
@@ -64,9 +66,16 @@ configurations.all {
  */
 
 testSample {
+	// At this point - this is how you set or over-ride variables for the plugin.
+	// Note that these must have both a setter and getter in the PluginExtension.java 	// class
+	booleanValue = true
+	stringValue = "this is a string value set from the build.plugin.gradle file"
+	stringList = [ "one", "two", "three" ]
 }
 
-def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'
+// __WARN__ if you have changed the source and target compatability to be another 
+// version of java - you will also need to change the links below
+def javaApiUrl = 'http://docs.oracle.com/javase/7/docs/api/'
 def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'
 
 tasks.withType(Javadoc) {
@@ -85,15 +94,16 @@ task sourcesJar(type: Jar) {
 
 // Now it is time to publish the plugin
 pluginBundle {
+	// __WARN__ ensure that the following links are actually set correctly 
 	website = 'https://github.com/synapticloop/TestSample'
 	vcsUrl = 'https://github.com/synapticloop/TestSample'
 	description = 'a simple test plugin'
-	tags = [  ]
+	tags = [ "test", "sample" ]
 
 	plugins {
 		TestSample {
-			id = 'synapticloop.testSample'
-			displayName = 'a simple test plugin'
+			id = 'synapticloop.TestSample'
+			displayName = 'Synapticloop sample test plugin'
 		}
 	}
 }

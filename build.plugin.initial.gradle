@@ -25,11 +25,13 @@ plugins {
 
 // textual information for this project
 group = 'synapticloop'
-archivesBaseName = 'testSample'
-description = """0.0.1"""
+archivesBaseName = 'TestSample'
+description = """a simple test plugin"""
 
 version = '0.0.1'
 
+// __WARN__ if you want the source and target compatability to be another version 
+// of java - you will also need to change the links to the javadoc locations
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
@@ -59,14 +61,19 @@ def locateJar(lib) {
 }
 
 task fatJar(type: Jar) {
-	classifier = 'all'
+	classifier = ''
 
+	// if you need to include other jars, then you will need to include a line
+	// for each of the dependency jars:
+	// from { locateJar('commons-cli') } { include "**" }
 	from(sourceSets.main.output) { include "**" }
 }
 
 build.finalizedBy(project.tasks.fatJar)
 
-def javaApiUrl = 'http://docs.oracle.com/javase/1.7.0/docs/api/'
+// __WARN__ if you have changed the source and target compatability to be another 
+// version of java - you will also need to change the links below
+def javaApiUrl = 'http://docs.oracle.com/javase/7/docs/api/'
 def groovyApiUrl = 'http://groovy.codehaus.org/gapi/'
 
 tasks.withType(Javadoc) {
@@ -86,6 +93,7 @@ task sourcesJar(type: Jar) {
 // this publishes the built jar to the local repository
 publishing {
 	publications {
+		// __WARN__: You will probably need to change this to be a single word
 		synapticloop(MavenPublication) {
 			from components.java
 			artifact sourcesJar

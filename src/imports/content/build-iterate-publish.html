@@ -1,0 +1,223 @@
+<h3>How to build, iterate and publish the plugin</h3>
+
+<hr />
+
+<h4>Process flow</h4>
+
+<p>
+	The process flow is as follows:
+</p>
+
+<p>Ensure that you have built the scaffolding:</p>
+<pre><code>
+{pre
+java -jar gradle-plugin-java-create-&lt;version&gt;.jar
+pre}
+</code></pre>
+
+<ol>
+	<li>Edit the code to get it to do what you want it to do</li>
+	<li>If you have never built the version of the plugin  before <code>gradle -b build.plugin.initial.gradle build pTML</code></li>
+	<li>Run and test the plugin <code>gradle -b build.plugin.gradle build</code></li>
+	<li>
+		Happy with the results
+		<ol>
+			<li>Publish your plugin <code>build -b build.plugin.gradle build pP</code></li>
+		</ol>
+	</li>
+	<li>
+		Unhappy with the results?
+		<ol>
+			<li>Update the version number in <code>build.plugin.initial.gradle</code> and <code>build.plugin.gradle</code></li>
+			<li>go back to the beginning</li>
+		</ol>
+	</li>
+</ol>
+
+<p>See below for more detailed instructions</p>
+
+<hr />
+
+<h3>The initial build</h3>
+
+<h4>Step 1</h4>
+
+<p>Generate the scaffolding:</p>
+
+<pre><code>
+{pre
+java -jar gradle-plugin-java-create-&lt;version&gt;.jar \
+    -a synapticloop \
+    -d "a simple test plugin" \
+    -dg Sample \
+    -dn "Synapticloop sample test plugin" \
+    -jp synapticloop.plugin.sample \
+    -n TestSample \
+    -t "test,sample"
+pre}
+</code></pre>
+
+<h4>Step 2</h4>
+
+<p>
+	Check the following files to ensure that everything looks good to go: (<strong>Especially the version numbers which should default to <code>0.0.1</code></strong>)
+</p>
+
+<ol>
+	<li><code>build.plugin.initial.gradle</code>
+		<ul>
+			<li>Ensure that the line <code>synapticloop(MavenPublication) {{</code> is only a single word (i.e. it show here <code>synapticloop</code> and should not show <code>com.synapticloop</code>)</li>
+		</ul>
+	</li>
+	<li><code>build.plugin.gradle</code></li>
+</ol>
+
+<h4>Step 3</h4>
+
+<p>
+	Build the initial plugin and publish it to maven local repository:
+</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.initial.gradle build publishToMavenLocal
+pre}
+</code></pre>
+
+<p><em>or</em> as a shorcut:</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.initial.gradle build pTML
+pre}
+</code></pre>
+
+<h4>Step 4</h4>
+
+<p>Test that the plugin is registered</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.gradle tasks
+pre}
+</code></pre>
+
+<p>You should see the following output:</p>
+
+<pre><code>
+{pre
+... snip ...
+
+
+Sample tasks
+------------
+testSample - a simple test plugin
+
+... snip ...
+pre}
+</code></pre>
+
+<h4>Step 5</h4>
+
+<p>Run the plugin</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.gradle testSample
+pre}
+</code></pre>
+
+<p>And you will see the following output</p>
+
+<pre><code>
+{pre
+:testSample
+This will be logged as output on standard out.
+Logging out the boolean value of 'booleanValue' as 'true'
+Logging out the string value of 'stringValue' as 'this is a string value set from the build.plugin.gradle file'
+Logging out the string value from the list 'stringList' as 'one'
+Logging out the string value from the list 'stringList' as 'two'
+Logging out the string value from the list 'stringList' as 'three'
+
+BUILD SUCCESSFUL
+pre}
+</code></pre>
+
+<p>Note that you do not see the 'info' or 'debug' messages - to see these, you will 
+need to pass in the <code>--info</code>, or <code>--debug</code> command line 
+parameters to the gradle build.</p>
+
+<hr />
+
+<h3>Iterating</h3>
+
+<p>
+	Now that you have tested that the build works, you can now iterate over the <code>Task.java</code> 
+	code until it works as expected.
+</p>
+
+<h4>Updating the plugin version</h4>
+
+<p>
+	In the <code>build.plugin.initial.gradle</code> file, update the version number 
+	in the line <code>version = '0.0.1'</code> and then:
+</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.initial.gradle build pTML
+pre}
+</code></pre>
+
+<p>
+	This will publish the plugin to the local maven repository which you can then 
+	update the plugin number in the <code>build.plugin.gradle</code> file and test 
+	it again.
+</p>
+
+<hr />
+
+<h3>Publishing</h3>
+
+<p>
+	Now that you have iterated and built the plugin - and you are happy with your 
+	plugin, you need to publish it.
+</p>
+
+<h4>Step 1</h4>
+
+<p>
+	Login or signup to the <a href="https://login.gradle.org/user/login">gradle plugin portal</a> 
+	ensuring that you have specified your username.
+</p>
+
+<h4>Step 2</h4>
+
+<p>
+	Retrieve your API keys buy clinking on the 'API Keys' tab on your home page.  
+	Follow the instructions (i.e. copy the <code>gradle.publish.key</code> and 
+	<code>gradle.publish.secret</code>) to your <code>gradle.properties</code> file 
+	(e.g. <code>HOME_DIR/.gradle/gradle.properties</code>).
+</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.gradle build publishPlugin
+pre}
+</code></pre>
+
+<p><em>or</em> just simply</p>
+
+<pre><code>
+{pre
+gradle -b build.plugin.gradle build pP
+pre}
+</code></pre>
+
+<h4>Step 3</h4>
+
+<p>
+	You, (and everybody else) is now ready to use your plugin - congratulations!
+</p>
+
+{import src/imports/footer.templar}
